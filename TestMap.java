@@ -7,6 +7,10 @@ public class TestMap {
 	public static HashMap<String, String> KEYWORDS = new HashMap<String, String>();
 	public static HashMap<String, String> PROCEDURES = new HashMap<String, String>();
 	public TestMap() {
+		
+	}
+	
+	public static void loadDictionary(){
 		OPERATOR.put("(", "LP");
 		OPERATOR.put(")", "RP");
 		OPERATOR.put(":=", "ASGN");
@@ -43,7 +47,7 @@ public class TestMap {
 	}
 	
 	public static void main(String[] args) {
-		TestMap t = new TestMap();
+		loadDictionary();
 		String test = "while SQRT * SQRT <= N do ";
 		String[] list = test.split("\\s");
 	
