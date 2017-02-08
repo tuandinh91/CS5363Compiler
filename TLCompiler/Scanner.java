@@ -106,15 +106,6 @@ public class Scanner {
 	    return matcher.matches();
 	}
 	
-	/* Don't need that
-	public static boolean isSeparator(String key){
-		if (isOperator(key) && key.equalsIgnoreCase(";"))
-			return true;
-		else
-			return false;
-	}
-	*/
-	
 	public static void scan (String inputFilePath){
 		loadDictionary();
 
