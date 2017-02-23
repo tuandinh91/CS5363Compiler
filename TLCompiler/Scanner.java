@@ -106,6 +106,7 @@ public class Scanner {
 	    return matcher.matches();
 	}
 	
+<<<<<<< HEAD
 	// Add extra space for all the operator in line.
 	public static String addSpace(String oldLine){
 		String newLine = new String();
@@ -197,6 +198,8 @@ public class Scanner {
 		return newLine;
 	}
 	
+=======
+>>>>>>> f8e5fc64bba682b505eac4653bebb74c55e27bd8
 	public static void scan (String inputFilePath){
 		
 		loadDictionary();
