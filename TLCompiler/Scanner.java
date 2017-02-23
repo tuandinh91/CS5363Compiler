@@ -3,8 +3,8 @@ package TLCompiler;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -106,16 +106,99 @@ public class Scanner {
 	    return matcher.matches();
 	}
 	
-	/* Don't need that
-	public static boolean isSeparator(String key){
-		if (isOperator(key) && key.equalsIgnoreCase(";"))
-			return true;
-		else
-			return false;
+	// Add extra space for all the operator in line.
+	public static String addSpace(String oldLine){
+		String newLine = new String();
+		int newIndex = 0;
+		int oldIndex = 0;
+		
+		oldLine = oldLine.replaceAll("\\(", " ( ");
+		oldLine = oldLine.replaceAll("\\)", " ) ");
+		oldLine = oldLine.replaceAll("\\:=", " := ");
+		oldLine = oldLine.replaceAll("\\;", " ; ");
+		oldLine = oldLine.replaceAll("\\*", " * ");
+		oldLine = oldLine.replaceAll("div", " div ");
+		oldLine = oldLine.replaceAll("mod", " mod ");
+		oldLine = oldLine.replaceAll("\\+", " + ");
+		oldLine = oldLine.replaceAll("\\-", " - ");
+		oldLine = oldLine.replaceAll("\\<=", " <= ");
+		oldLine = oldLine.replaceAll("\\>=", " >= ");
+		oldLine = oldLine.replaceAll("\\!=", " != ");
+		
+		// add space for =,<,>
+		newLine = oldLine;
+		for (oldIndex = 0 ; oldIndex < oldLine.length(); ) {
+			if(oldLine.substring(oldIndex, oldIndex + 1).equals("<")) {
+				if ( (oldIndex + 1) < oldLine.length() ) {
+					if (oldLine.substring(oldIndex + 1, oldIndex + 2).equals("=")){
+					//find "<=", do nothing
+						oldIndex++;
+					}
+					else {
+						newLine = newLine.substring(0, newIndex) + " < " + oldLine.substring(oldIndex + 1);
+						newIndex = newIndex + 3;
+					}
+				}
+				else { // sentence end with <
+					if (oldIndex == 0) { // sentence start with <
+						newLine = " < ";
+					}
+					else { // sentence not start with <
+						newLine = newLine.substring(0, newIndex) + " < ";
+					}
+					
+				}				 
+			}
+			else if(oldLine.substring(oldIndex, oldIndex+1).equals(">")) {
+				if ( (oldIndex + 1) < oldLine.length() ) {
+					if (oldLine.substring(oldIndex + 1, oldIndex + 2).equals("=")){
+					    //find ">=", do nothing
+						oldIndex++;
+					}
+					else {
+						newLine = newLine.substring(0, newIndex) + " > " + oldLine.substring(oldIndex + 1);
+						newIndex = newIndex + 3;
+					}
+				}
+				else { // sentence end with >
+					if (oldIndex == 0) { // sentence start with >
+						newLine = " > ";
+					}
+					else { // sentence not start with >
+						newLine = newLine.substring(0,newIndex) + " > ";
+					}
+				}				 
+			}
+			else if(oldLine.substring(oldIndex, oldIndex + 1).equals("=")) {
+				if ( (oldIndex -1) >= 0 ) { 
+					if (oldLine.substring(oldIndex - 1, oldIndex).equals(":")){
+					//find ":=", do nothing
+					}
+					else {
+						newLine = newLine.substring(0, newIndex) + " = " + oldLine.substring(oldIndex + 1);
+						newIndex = newIndex + 3;
+					}
+				}
+				else { // sentence starts with =
+					if ( (oldIndex + 1) >= oldLine.length()) {  // sentence end with =
+						newLine = " = ";
+					}
+					else { // sentence not end with =
+						newLine =  " = " + oldLine.substring(oldIndex + 1);
+						newIndex = newIndex + 3;
+					}
+				}				 
+			}
+			else {
+				newIndex++;
+			}
+			oldIndex++;
+		}		
+		return newLine;
 	}
-	*/
 	
 	public static void scan (String inputFilePath){
+		
 		loadDictionary();
 
 		int line_num = 0;
@@ -136,7 +219,7 @@ public class Scanner {
 				if (line.equals(""))
 					continue; //skip the empty line
 				
-		    	String[] list = line.split("\\s+");
+				String[] list = addSpace(line).split("\\s+");
 		    	
 		    	for (String token: list){
 					token_num++;
@@ -163,8 +246,7 @@ public class Scanner {
 		    			
 		    			
 		    	}
-				
-				
+								
 		    }
 			
 			//remove the last new line character
@@ -187,10 +269,6 @@ public class Scanner {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
-			
-		
-		
+		} 		
 	}
-
 }
