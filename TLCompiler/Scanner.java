@@ -45,8 +45,6 @@ public class Scanner {
 		
 		PROCEDURES.put("writeInt", "WRITEINT");
 		PROCEDURES.put("readInt", "READINT");
-		PROCEDURES.put("writeint", "WRITEINT");
-		PROCEDURES.put("readint", "READINT");
 	}
 	
 	public static boolean isSingleOperator(String key){
