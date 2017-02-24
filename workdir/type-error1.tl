@@ -1,5 +1,5 @@
 program
-	var X as int ;
+	var X as bool ;
 begin
 	X := readint ;
 	writeint 2 * X ;

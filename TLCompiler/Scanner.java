@@ -72,12 +72,12 @@ public class Scanner {
 	// but we are using 32-bit integers. 
 	// Only 0 through 2147483647 are legal integer.
 	public static boolean isNumber(String key){
-		int num;
+		long num;
 	    String regex = "\\d+";
 	    Pattern pattern = Pattern.compile(regex);
 	    Matcher matcher = pattern.matcher(key);
 	    if (matcher.matches()) {
-	    	num = Integer.parseInt(key);
+	    	num = Long.valueOf(key);
 	    	if (num < 2147483647 && num >= 0 )
 	    		return true;
 	    	else {
@@ -104,7 +104,6 @@ public class Scanner {
 	    return matcher.matches();
 	}
 	
-<<<<<<< HEAD
 	// Add extra space for all the operator in line.
 	public static String addSpace(String oldLine){
 		String newLine = new String();
@@ -196,8 +195,7 @@ public class Scanner {
 		return newLine;
 	}
 	
-=======
->>>>>>> f8e5fc64bba682b505eac4653bebb74c55e27bd8
+
 	public static void scan (String inputFilePath){
 		
 		loadDictionary();

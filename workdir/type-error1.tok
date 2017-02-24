@@ -2,7 +2,7 @@ PROGRAM
 VAR
 ident(X)
 AS
-INT
+BOOL
 SC
 BEGIN
 ident(X)

@@ -12,7 +12,7 @@ SC
 BEGIN
 ident(N)
 ASGN
-READINT
+ident(readint)
 SC
 ident(SQRT)
 ASGN
@@ -39,7 +39,7 @@ ident(SQRT)
 ADDITIVE(-)
 num(1)
 SC
-WRITEINT
+ident(writeint)
 ident(SQRT)
 SC
 END
