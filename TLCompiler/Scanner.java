@@ -115,8 +115,6 @@ public class Scanner {
 		oldLine = oldLine.replaceAll("\\:=", " := ");
 		oldLine = oldLine.replaceAll("\\;", " ; ");
 		oldLine = oldLine.replaceAll("\\*", " * ");
-		oldLine = oldLine.replaceAll("div", " div ");
-		oldLine = oldLine.replaceAll("mod", " mod ");
 		oldLine = oldLine.replaceAll("\\+", " + ");
 		oldLine = oldLine.replaceAll("\\-", " - ");
 		oldLine = oldLine.replaceAll("\\<=", " <= ");
