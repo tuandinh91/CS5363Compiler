@@ -1,6 +1,6 @@
 program
 	var X as int ;
 begin
-	X := readint ;
-	writeint 2 * X ;
+	X := readInt ;
+	writeInt 2 * X ;
 end

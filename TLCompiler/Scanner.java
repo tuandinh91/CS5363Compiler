@@ -18,6 +18,7 @@ public class Scanner {
 	public static HashMap<String, String> SINGLE_OPERATOR = new HashMap<String, String>();
 	public static HashMap<String, String> KEYWORDS = new HashMap<String, String>();
 	public static HashMap<String, String> PROCEDURES = new HashMap<String, String>();
+	public static TokenStream tokenStream = new TokenStream();
 	public Scanner() {
 		
 	}
@@ -205,7 +206,7 @@ public class Scanner {
 		try(BufferedReader br = new BufferedReader(new FileReader(inputFilePath+".tl"))) {
 			
 			
-			String tokenList = "";
+			//String tokenList = "";
 			
 		    for(String line; (line = br.readLine()) != null; ) {
 		        // process the line.
@@ -223,19 +224,23 @@ public class Scanner {
 		    		if (isComment(token))
 						break;
 		    		else if (isSingleOperator(token))
-		    			tokenList+= (SINGLE_OPERATOR.get(token)) +"\n";  //print out SC, LP,RP
+		    			tokenStream.addToken(new Token(SINGLE_OPERATOR.get(token), null));  //print out SC, LP,RP
 		    		else if (isBoollit(token))
-		    			tokenList +=("boollit"+ "(" + token +")")+"\n";		    		
+		    			//boolit true/false	    
+		    			tokenStream.addToken(new Token("boollit", token));
 		    		else if (isNumber(token))
-		    			tokenList +=("num"+ "(" + token +")")+"\n";
+		    			//number 1-9
+		    			tokenStream.addToken(new Token("num", token));
 		    		else if (isKeyword(token))
-		    			tokenList +=(KEYWORDS.get(token))+"\n";
+		    			tokenStream.addToken(new Token(KEYWORDS.get(token), null));
 		    		else if (isMultipleOperator(token))
-		    			tokenList +=(MULTIPLE_OPERATOR.get(token) + "("+token+")")+"\n";
+		    			tokenStream.addToken(new Token(MULTIPLE_OPERATOR.get(token), token));    		
 		    		else if (isProcedure(token))
-		    			tokenList +=(PROCEDURES.get(token))+"\n";
+		    			//its procedure
+		    			tokenStream.addToken(new Token(PROCEDURES.get(token), null));    
 		    		else if (isIdent(token))
-		    			tokenList +=("ident"+ "(" + token +")")+"\n";
+		    			//its variable
+		    			tokenStream.addToken(new Token("ident", token));   
 		    		else {
 		    			System.err.println("Illegal token found: " + token + ", line " +line_num +", token " +token_num);
 			    		System.exit(1);
@@ -244,18 +249,14 @@ public class Scanner {
 		    			
 		    	}
 								
-		    }
-			
-			//remove the last new line character
-			if (tokenList.length() > 0 && tokenList.charAt(tokenList.length()-1)=='\n') {
-			      tokenList = tokenList.substring(0, tokenList.length()-1);
-			    }
+		    }			
 			
 			//put it to the file
 			FileWriter writer = null;
 			    try {
 			        writer = new FileWriter(inputFilePath+".tok");
-			        writer.write(tokenList);
+			        for (Token t : tokenStream.getTokens())
+			        	writer.write(t + "\n");
 			        writer.close();
 			    } catch (IOException e) {
 			        e.printStackTrace();
